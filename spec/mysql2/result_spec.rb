@@ -217,7 +217,7 @@ RSpec.describe Mysql2::Result do
       it "should return TrueClass or FalseClass for a TINYINT value if :cast_booleans is enabled" do
         result1 = @client.query "SELECT bool_cast_test FROM mysql2_test WHERE id = #{id1} LIMIT 1", cast_booleans: true
         result2 = @client.query "SELECT bool_cast_test FROM mysql2_test WHERE id = #{id2} LIMIT 1", cast_booleans: true
-        result3 = @client.query "SELECT bool_cast_test FROM mysql2_test WHERE id = #{id3} LIMIT 1", cast_booleans: true
+        result3 = @client.query "SELECT bool_cast_test FROM mysql2_test WHERE id = #{id3} UNION SELECT bool_cast_test FROM mysql2_test WHERE id = #{id3}", :cast_booleans => true
         expect(result1.first['bool_cast_test']).to be true
         expect(result2.first['bool_cast_test']).to be false
         expect(result3.first['bool_cast_test']).to be true
